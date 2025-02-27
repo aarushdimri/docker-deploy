@@ -22,7 +22,9 @@ RUN echo "Attempting to clone repository..." && \
     echo "Repository cloned successfully"
 
 # Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN mkdir -p /var/cache/composer && chown www-data:www-data /var/cache/composer
+RUN composer install --no-dev --optimize-autoloader --verbose || \
+    { echo "Composer install failed"; exit 1; }
 
 # Fix permissions
 RUN chown -R www-data:www-data /var/www/html
