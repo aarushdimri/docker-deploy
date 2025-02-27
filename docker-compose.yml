@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GITLAB_DEPLOY_TOKEN: ${GITLAB_DEPLOY_TOKEN}
+        GITLAB_REPO_URL: ${GITLAB_REPO_URL}
+    networks:
+      - app-network
+
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+networks:
+  app-network:
+    driver: bridge
