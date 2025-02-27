@@ -21,6 +21,9 @@ RUN echo "Attempting to clone repository..." && \
     git clone --verbose https://gitlab+deploy-token-7451311:${GITLAB_DEPLOY_TOKEN}@${GITLAB_REPO_URL} . || { echo "Clone failed"; exit 1; } && \
     echo "Repository cloned successfully"
 
+# Copy nginx.conf to a temporary location
+COPY nginx.conf /tmp/nginx.conf
+
 # Composer cache
 RUN mkdir -p /var/cache/composer && chown www-data:www-data /var/cache/composer
 
