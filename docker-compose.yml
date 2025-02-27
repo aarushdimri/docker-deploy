@@ -14,7 +14,7 @@ services:
     ports:
       - "37869:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - /data/compose/102/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
       - app-network
     depends_on:
