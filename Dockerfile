@@ -18,7 +18,7 @@ ARG GITLAB_DEPLOY_TOKEN
 ARG GITLAB_REPO_URL
 RUN echo "Attempting to clone repository..." && \
     git config --global http.sslVerify true && \
-    git clone --verbose https://gitlab-ci-token:${GITLAB_DEPLOY_TOKEN}@${GITLAB_REPO_URL} . || { echo "Clone failed"; exit 1; } && \
+    git clone --verbose https://gitlab+deploy-token-7451311:${GITLAB_DEPLOY_TOKEN}@${GITLAB_REPO_URL} . || { echo "Clone failed"; exit 1; } && \
     echo "Repository cloned successfully"
 
 # Install dependencies
