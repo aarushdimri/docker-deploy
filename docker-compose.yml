@@ -6,25 +6,19 @@ services:
       args:
         GITLAB_DEPLOY_TOKEN: ${GITLAB_DEPLOY_TOKEN}
         GITLAB_REPO_URL: ${GITLAB_REPO_URL}
-    volumes:
-      - nginx_config:/tmp/nginx.conf
     networks:
       - app-network
 
   web:
     image: nginx:latest
     ports:
-      - "80:80"
+      - "37869:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro  # Bind mount for single file
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
       - app-network
     depends_on:
       - app
-
-volumes:
-  nginx_config:
-    driver: local
 
 networks:
   app-network:
