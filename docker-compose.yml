@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.nginx
       args:
         GITLAB_DEPLOY_TOKEN: ${GITLAB_DEPLOY_TOKEN}
         GITLAB_REPO_URL: ${GITLAB_REPO_URL}
