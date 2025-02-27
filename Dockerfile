@@ -21,10 +21,15 @@ RUN echo "Attempting to clone repository..." && \
     git clone --verbose https://gitlab+deploy-token-7451311:${GITLAB_DEPLOY_TOKEN}@${GITLAB_REPO_URL} . || { echo "Clone failed"; exit 1; } && \
     echo "Repository cloned successfully"
 
-# Install dependencies
+# Composer cache
 RUN mkdir -p /var/cache/composer && chown www-data:www-data /var/cache/composer
-RUN composer install --no-dev --optimize-autoloader --verbose || \
-    { echo "Composer install failed"; exit 1; }
+
+# Increase PHP memory limit
+RUN echo 'memory_limit = 2G' > /usr/local/etc/php/conf.d/memory.ini
+
+# Install dependencies with logging
+RUN composer install --no-dev --optimize-autoloader --verbose 2>&1 | tee composer.log || \
+    { echo "Composer install failed"; cat composer.log; exit 1; }
 
 # Fix permissions
 RUN chown -R www-data:www-data /var/www/html
